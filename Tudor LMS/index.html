@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TUDOR Formation - Excellence & Savoir-faire</title>
+    <style>
+        :root {
+            --tudor-black: #000000;
+            --tudor-red: #FF0000;
+            --tudor-burgundy: #800020;
+            --tudor-blue: #003366;
+            --tudor-gold: #D4AF37;
+            --tudor-cream: #F5F5F0;
+            --tudor-graphite: #2B2B2B;
+            --tudor-steel: #A9A9A9;
+            --tudor-dark-gray: #1F1F1F;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--tudor-cream);
+            color: var(--tudor-black);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--tudor-black);
+            color: var(--tudor-gold);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--tudor-burgundy);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-weight: bold;
+            font-size: 24px;
+            letter-spacing: 2px;
+            font-family: Georgia, serif;
+        }
+
+        .logo-shield {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+
+        .logo-shield img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .header-title {
+            font-size: 14px;
+            letter-spacing: 1px;
+            font-weight: 300;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .lang-switch {
+            background: var(--tudor-burgundy);
+            color: var(--tudor-cream);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .lang-switch:hover {
+            background: var(--tudor-blue);
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: calc(100vh - 80px);
+        }
+
+        .sidebar {
+            background-color: var(--tudor-graphite);
+            color: var(--tudor-cream);
+            padding: 40px 20px;
+            border-right: 1px solid var(--tudor-dark-gray);
+            overflow-y: auto;
+        }
+
+        .sidebar h3 {
+            font-size: 13px;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            color: var(--tudor-gold);
+            font-family: Georgia, serif;
+        }
+
+        .module-list {
+            list-style: none;
+        }
+
+        .module-item {
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border-left: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .module-item:hover {
+            background-color: var(--tudor-dark-gray);
+            border-left-color: var(--tudor-gold);
+            padding-left: 18px;
+        }
+
+        .module-item.active {
+            background-color: var(--tudor-dark-gray);
+            border-left-color: var(--tudor-burgundy);
+            color: var(--tudor-gold);
+            font-weight: 600;
+        }
+
+        .module-icon {
+            margin-right: 8px;
+            font-size: 16px;
+        }
+
+        .progress-section {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--tudor-dark-gray);
+        }
+
+        .progress-label {
+            font-size: 11px;
+            letter-spacing: 1px;
+            color: var(--tudor-steel);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background-color: var(--tudor-dark-gray);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 70%;
+            background: linear-gradient(90deg, var(--tudor-burgundy), var(--tudor-gold));
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-percent {
+            font-size: 12px;
+            color: var(--tudor-gold);
+            font-weight: bold;
+        }
+
+        main {
+            background-color: var(--tudor-cream);
+            padding: 50px;
+            overflow-y: auto;
+        }
+
+        main::before {
+            content: '';
+            display: block;
+            height: 4px;
+            background: linear-gradient(90deg, var(--tudor-burgundy) 0%, var(--tudor-blue) 50%, var(--tudor-burgundy) 100%);
+            margin: -50px -50px 30px -50px;
+            border-radius: 2px;
+        }
+
+        .module-content {
+            display: none;
+        }
+
+        .module-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .module-header {
+            border-bottom: 3px solid var(--tudor-blue);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .module-header h1 {
+            font-family: Georgia, serif;
+            font-size: 36px;
+            color: var(--tudor-black);
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .module-subtitle {
+            color: var(--tudor-burgundy);
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .card {
+            background: white;
+            border-left: 4px solid var(--tudor-blue);
+            border-radius: 4px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            background: radial-gradient(circle at 30% 30%, rgba(212, 175, 55, 0.03), transparent);
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            border-left-color: var(--tudor-burgundy);
+        }
+
+        .card h2 {
+            color: var(--tudor-black);
+            font-size: 22px;
+            margin-bottom: 15px;
+            font-family: Georgia, serif;
+        }
+
+        .card p {
+            color: var(--tudor-graphite);
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .card ul {
+            margin-left: 20px;
+            margin-top: 15px;
+        }
+
+        .card li {
+            margin-bottom: 10px;
+            color: var(--tudor-graphite);
+        }
+
+        .tudor-rose-emblem {
+            width: 200px;
+            height: 200px;
+            margin: 40px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(128, 0, 32, 0.1), rgba(212, 175, 55, 0.1));
+            border: 2px solid var(--tudor-gold);
+            font-size: 100px;
+            color: var(--tudor-burgundy);
+        }
+
+        .module-image {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            margin: 30px auto;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: block;
+        }
+
+        .image-placeholder {
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            margin: 30px auto;
+            border-radius: 4px;
+            background: linear-gradient(135deg, var(--tudor-graphite) 0%, var(--tudor-dark-gray) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--tudor-cream);
+            font-size: 14px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .image-caption {
+            font-size: 12px;
+            color: var(--tudor-steel);
+            text-align: center;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        .quiz-container {
+            background: white;
+            border: 2px solid var(--tudor-blue);
+            border-radius: 4px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--tudor-burgundy);
+            padding-bottom: 15px;
+        }
+
+        .quiz-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--tudor-black);
+        }
+
+        .quiz-timer {
+            font-size: 14px;
+            color: var(--tudor-burgundy);
+            font-weight: bold;
+        }
+
+        .question {
+            margin-bottom: 30px;
+        }
+
+        .question-text {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--tudor-black);
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: var(--tudor-burgundy);
+            color: var(--tudor-cream);
+        }
+
+        .btn-primary:hover {
+            background: var(--tudor-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(128, 0, 32, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--tudor-blue);
+            color: var(--tudor-cream);
+        }
+
+        .btn-secondary:hover {
+            background: var(--tudor-burgundy);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                display: none;
+            }
+            main {
+                padding: 30px;
+            }
+            main::before {
+                margin: -30px -30px 20px -30px;
+            }
+            header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            .module-header h1 {
+                font-size: 28px;
+            }
+            .card {
+                padding: 20px;
+            }
+        }
+        /* QUIZ CONTAINER */
+.quiz-container {
+    background: transparent;
+    border: none;
+    border-left: 4px solid var(--tudor-blue);
+    border-radius: 0;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: none;
+    transition: border-left-color 0.3s ease;
+}
+
+.quiz-container:hover {
+    border-left-color: var(--tudor-burgundy);
+}
+
+.quiz-header {
+    border: none;
+    border-bottom: none;
+    box-shadow: none;
+}
+
+.question {
+    border: none;
+    box-shadow: none;
+}
+
+.quiz-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--tudor-burgundy);
+}
+
+.quiz-timer {
+    font-size: 13px;
+    color: var(--tudor-burgundy);
+    font-weight: 600;
+}
+
+.quiz-btn {
+    background: var(--tudor-burgundy);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+}
+
+.quiz-btn:hover {
+    background: var(--tudor-blue);
+}
+
+.quiz-answer {
+    margin-top: 20px;
+    padding: 20px;
+    background: linear-gradient(135deg, #fffef9 0%, #fefdfb 100%);
+    border-left: 4px solid var(--tudor-gold);
+    border-radius: 4px;
+    display: none;  /* ← CACHÉ PAR DÉFAUT */
+    animation: slideDown 0.3s ease;
+}
+
+.quiz-answer.show {
+    display: block;  /* ← VISIBLE APRÈS CLIC */
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* BULLE CONSEIL */
+.tip-bubble {
+    background: linear-gradient(135deg, #fffef9 0%, #fefdfb 100%);
+    border-left: 4px solid var(--tudor-gold);
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 4px;
+}
+
+.tip-bubble-title {
+    font-weight: 700;
+    color: var(--tudor-burgundy);
+    margin-bottom: 10px;
+}
+
+
+        @media (max-width: 480px) {
+            main {
+                padding: 15px;
+            }
+            main::before {
+                margin: -15px -15px 15px -15px;
+            }
+            .module-header h1 {
+                font-size: 22px;
+            }
+            .card {
+                padding: 15px;
+            }
+            .button-group {
+                flex-direction: column;
+            }
+            .btn {
+                width: 100%;
+            }
+        }
+        /* ========== COVER SCREEN ========== */
+#cover-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(135deg, rgba(0,0,0,0.4), rgba(128, 0, 32, 0.3)), 
+                url('assets/images/cover.jpg') center/cover no-repeat;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    flex-direction: column;
+    gap: 30px;
+}
+
+#cover-screen.hidden {
+    display: none;
+}
+
+.cover-content {
+    text-align: center;
+    color: white;
+    max-width: 800px;
+    padding: 30px;
+}
+
+.cover-content h1 {
+    font-size: 56px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-shadow: 3px 3px 12px rgba(0,0,0,0.7);
+    font-family: 'Georgia', serif;
+    letter-spacing: 2px;
+}
+
+.cover-content p {
+    font-size: 24px;
+    margin-bottom: 40px;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+    opacity: 0.95;
+    font-style: italic;
+}
+
+.cover-btn {
+    background: var(--tudor-burgundy);
+    color: white;
+    border: 2px solid white;
+    padding: 18px 60px;
+    font-size: 20px;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.cover-btn:hover {
+    background: white;
+    color: var(--tudor-burgundy);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.6);
+}
+    </style>
+</head>
+<body>
+    <body>
+
+<!-- ============ COVER/SPLASH SCREEN ============ -->
+<div id="cover-screen">
+    <div class="cover-content">
+        <h1 data-fr="TUDOR Formation" data-en="TUDOR Training">TUDOR Formation</h1>
+        <p data-fr="Excellence & Savoir-faire Horloger" data-en="Excellence & Watchmaking Expertise">Excellence & Savoir-faire Horloger</p>
+        <button class="cover-btn" onclick="startCourse()" 
+                data-fr="Commencer le cours" 
+                data-en="Start Course">
+            Commencer le cours
+        </button>
+    </div>
+</div>
+<!-- ============ FIN COVER ============ -->
+ 
+    <header>
+        <div class="header-left">
+            <div class="logo-shield">
+                <img src="assets/images/icons/tudor-logo.png" alt="Logo Tudor" onerror="this.style.display='none';">
+            </div>
+            <div>
+                <div class="logo">TUDOR</div>
+                <div class="header-title" data-fr="Formation Consultants Détaillants" data-en="Training Consultants Retailers">Formation Consultants Détaillants</div>
+            </div>
+        </div>
+        <div class="header-right">
+            <button class="lang-switch" onclick="toggleLanguage()" id="langBtn">EN</button>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <aside class="sidebar">
+            <h3 data-fr="📚 Modules" data-en="📚 Modules">📚 Modules</h3>
+            <ul class="module-list">
+                <li class="module-item active" onclick="switchModule(0)">
+                    <span class="module-icon">✓</span>
+                    <span data-fr="Héritage Tudor" data-en="Tudor's Heritage">Héritage Tudor</span>
+                </li>
+                <li class="module-item" onclick="switchModule(1)">
+                    <span class="module-icon">◐</span>
+                    <span data-fr="Conseiller Client" data-en="Client Advisor">Conseiller Client</span>
+                </li>
+                <li class="module-item" onclick="switchModule(2)">
+                    <span class="module-icon">○</span>
+                    <span data-fr="Authenticité & Qualité" data-en="Authenticity & Quality">Authenticité & Qualité</span>
+                </li>
+            </ul>
+
+            <div class="progress-section">
+                <div class="progress-label" data-fr="Progression" data-en="Progress">Progression</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-percent" id="progressPercent">70%</div>
+            </div>
+        </aside>
+
+        <main>
+
+            <!-- MODULE 1: HÉRITAGE -->
+            <section class="module-content active" id="module-0">
+                <div class="module-header">
+                    <h1 data-fr="L'Héritage Tudor" data-en="Tudor's Heritage">L'Héritage Tudor</h1>
+                    <div class="module-subtitle" data-fr="Depuis 1926 — Excellence Suisse" data-en="Since 1926 — Swiss Excellence">Depuis 1926 — Excellence Suisse</div>
+                </div>
+
+                <div class="card">
+                    <h2 data-fr="🛡️ Fondations de la Marque" data-en="🛡️ Brand Foundations">🛡️ Origines de la Marque</h2>
+                    <p data-fr="Tudor a été créée en <strong>1926 par Hans Wilsdorf</strong>, le créateur visionnaire derrière Rolex. Avec un positionnement stratégique clair — <strong>« Une montre Rolex à prix accessible »</strong> — Tudor s'est imposée comme référence de l'horlogerie de luxe abordable, sans compromis sur la qualité." data-en="Tudor was created in <strong>1926 by Hans Wilsdorf</strong>, the visionary creator behind Rolex. With a clear strategic positioning — <strong>« A Rolex watch at an accessible price »</strong> — Tudor established itself as the reference for affordable luxury watchmaking, without compromise on quality.">Tudor a été créée en <strong>1926 par Hans Wilsdorf</strong>, le créateur visionnaire derrière Rolex. Avec un positionnement stratégique clair — <strong>« Une montre Rolex à prix accessible »</strong> — Tudor s'est imposée comme référence de l'horlogerie de luxe abordable, sans compromis sur la qualité.</p>
+                    <p data-fr="Chaque montre Tudor incarne <strong>l'excellence technique suisse</strong>, la précision chronométrique certifiée COSC, et un design intemporel qui défie les modes." data-en="Each Tudor watch embodies <strong>Swiss technical excellence</strong>, COSC-certified chronometric precision, and timeless design that defies trends.">Chaque montre Tudor incarne <strong>l'excellence technique suisse</strong>, la précision chronométrique certifiée COSC, et un design intemporel qui défie les modes.</p>
+                </div>
+
+                <!-- ROSE HISTORIQUE DE LA MONTRE -->
+                <img src="assets/images/icons/tudor-rose-logo.jfif" alt="Écusson Tudor" class="module-image">
+                <p class="image-caption" data-fr="Ancien logo la <strong>Rose</strong> historique de la montre Tudor — symbole d'authenticité et d'héritage horloger depuis 1926" data-en="Historic Tudor watch rose — symbol of authenticity and watchmaking heritage since 1926">Ancien logo: <strong>la Rose</strong> historique de la montre Tudor — symbole d'authenticité et d'héritage horloger depuis 1926</p>
+
+                <div class="card">
+                    <h2 data-fr="⌚ Les collections iconiques" data-en="⌚ The iconic collections">⌚ Les collections iconiques</h2>
+                    <p data-fr="<strong>Black Bay :</strong> La ligne signature de Tudor, incarnant le design vintage revisité. Disponible en multiples coloris — bordeaux, bleu et noir, parmis d'autres — la Black Bay représente aventure et robustesse." data-en="<strong>Black Bay:</strong> Tudor's signature line, embodying revisited vintage design. Available in multiple colors — burgundy, blue and black, among others — the Black Bay represents adventure and robustness."><strong>Black Bay :</strong> La ligne signature de Tudor, incarnant le design vintage revisité. Disponible en multiples coloris — bordeaux, bleu et noir, parmis d'autres — la Black Bay représente aventure et robustesse.</p>
+                    <p data-fr="<strong>Pelagos :</strong> Montre de plongée haute performance, certifiée pour 500 mètres d'immersion. Symbole de recherche technologique et de capacités extrêmes." data-en="<strong>Pelagos:</strong> High-performance diving watch, certified for 500 meters of immersion. Symbol of technological research and extreme capabilities."><strong>Pelagos :</strong> Montre de plongée haute performance, certifiée pour 500 mètres d'immersion. Symbole de recherche technologique et de capacités extrêmes.</p>
+                    <p data-fr="<strong>Ranger & Glamour :</strong> Collections complémentaires exprimant polyvalence — du quotidien luxe à l'élégance intemporelle." data-en="<strong>Ranger & Glamour:</strong> Complementary collections expressing versatility — from luxury everyday to timeless elegance."><strong>Ranger & Glamour :</strong> Collections complémentaires exprimant polyvalence — du quotidien luxe à l'élégance intemporelle.</p>
+                </div>
+
+                <img src="assets/images/watches/black-bay-vs-pelagos.jpg" alt="Collections Tudor" class="module-image" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\'image-placeholder\'>⌚ Collections</div>')">
+                <p class="image-caption" data-fr="Collections emblématiques — designs distincts et innovants" data-en="Iconic collections — distinctive and innovative designs">Collections emblématiques — designs distincts et innovants</p>
+
+                <div class="card">
+                    <h2 data-fr="🏆 Valeurs Fondamentales" data-en="🏆 Core Values">🏆 Valeurs Fondamentales</h2>
+                    <p data-fr="Tudor n'est pas une simple montre — c'est un <strong>engagement envers l'excellence</strong> :" data-en="Tudor is not just a watch — it is a <strong>commitment to excellence</strong>:">Tudor n'est pas une simple montre — c'est un <strong>engagement envers l'excellence</strong> :</p>
+                    <ul>
+                        <li data-fr="<strong>Précision :</strong> Chronométrage certifié COSC, fiabilité absolue" data-en="<strong>Precision:</strong> COSC-certified timing, absolute reliability"><strong>Précision :</strong> Chronométrage certifié COSC, fiabilité absolue</li>
+                        <li data-fr="<strong>Artisanat :</strong> Fabrication suisse rigoureuse, contrôle qualité exigeant" data-en="<strong>Craftsmanship:</strong> Rigorous Swiss manufacturing, demanding quality control"><strong>Artisanat :</strong> Fabrication suisse rigoureuse, contrôle qualité exigeant</li>
+                        <li data-fr="<strong>Innovation :</strong> Recherche continue en matériaux, mouvements, designs" data-en="<strong>Innovation:</strong> Continuous research in materials, movements, designs"><strong>Innovation :</strong> Recherche continue en matériaux, mouvements, designs</li>
+                        <li data-fr="<strong>Aventure :</strong> Montres conçues pour explorateurs, professionnels, passionnés" data-en="<strong>Adventure:</strong> Watches designed for explorers, professionals, enthusiasts"><strong>Aventure :</strong> Montres conçues pour explorateurs, professionnels, passionnés</li>
+                    </ul>
+                </div>
+
+                <img src="assets/images/technical/mechanical-movement.jpg" alt="Mouvement mécanique" class="module-image" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\'image-placeholder\'>⚙️ Mouvement</div>')">
+                <p class="image-caption" data-fr="Mouvement mécanique — artisanat et précision suisse" data-en="Mechanical movement — Swiss craftsmanship and precision">Mouvement mécanique — artisanat et précision suisse</p>
+
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="switchModule(1)" data-fr="➜ Continuer vers Module 2" data-en="➜ Suivant">➜ Suivant</button>
+                </div>
+            </section>
+
+            <!-- MODULE 2: CONSEILLER CLIENT -->
+            <section class="module-content" id="module-1">
+                <div class="module-header">
+                    <h1 data-fr="Conseiller Client Luxe" data-en="Luxury Client Advisor">Conseiller Client Luxe</h1>
+                    <div class="module-subtitle" data-fr="Argumentaire de Vente & Positionnement" data-en="Sales Pitch & Positioning">Argumentaire de Vente & Positionnement</div>
+                </div>
+
+                <div class="card">
+                    <h2 data-fr="💎 Différenciation Tudor vs Rolex" data-en="💎 Tudor vs Rolex Differentiation">💎 Différenciation Tudor vs Rolex</h2>
+                    <p data-fr="Tudor partage l'héritage Wilsdorf et la rigueur suisse avec Rolex, mais s'impose comme <strong>alternative stratégique de prestige</strong> :" data-en="Tudor shares the Wilsdorf heritage and Swiss rigor with Rolex, but stands as a <strong>strategic prestige alternative</strong>:">Tudor partage l'héritage Wilsdorf et la rigueur suisse avec Rolex, mais s'impose comme <strong>alternative stratégique de prestige</strong> :</p>
+                    <ul>
+                        <li data-fr="<strong>Accessibilité stratégique</strong> : Excellence identique, prix plus accessible" data-en="<strong>Strategic accessibility:</strong> Identical excellence, more accessible price"><strong>Accessibilité stratégique</strong> : Excellence identique, prix plus accessible</li>
+                        <li data-fr="<strong>Design distinctif</strong> : Black Bay = identité forte, reconnaissance immédiate" data-en="<strong>Distinctive design:</strong> Black Bay = strong identity, immediate recognition"><strong>Design distinctif</strong> : Black Bay = identité forte, reconnaissance immédiate</li>
+                        <li data-fr="<strong>Innovation technique</strong> : Recherche continue, technologies propriétaires" data-en="<strong>Technical innovation:</strong> Continuous research, proprietary technologies"><strong>Innovation technique</strong> : Recherche continue, technologies propriétaires</li>
+                        <li data-fr="<strong>Public connaisseur</strong> : Apprécié des experts, pas « effet de masse »" data-en="<strong>Connoisseur public:</strong> Appreciated by experts, no « mass effect »"><strong>Public connaisseur</strong> : Apprécié des experts, pas « effet de masse »</li>
+                    </ul>
+                </div>
+
+                <img src="assets/images/watches/pelagos-comparison.jpg" alt="Pelagos" class="module-image" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\'image-placeholder\'>🎯 Collections</div>')">
+                <p class="image-caption" data-fr="Collections distinctes — diversité et innovation design" data-en="Distinct collections — diversity and design innovation">Collections distinctes — diversité et innovation design</p>
+
+                <div class="card">
+                    <h2 data-fr="💬 Argumentaire Clés" data-en="💬 Key Arguments">💬 Argumentaire Clés</h2>
+                    <p data-fr="Points essentiels à retenir :" data-en="Essential points to remember:">Points essentiels à retenir :</p>
+                    <ul>
+                        <li data-fr="Excellence technique identique à Rolex" data-en="Technical excellence identical to Rolex">Excellence technique identique à Rolex</li>
+                        <li data-fr="COSC certifié (précision chronométrique garantie)" data-en="COSC certified (guaranteed chronometric precision)">COSC certifié (précision chronométrique garantie)</li>
+                        <li data-fr="Fabrication suisse, contrôle qualité exigeant" data-en="Swiss manufacturing, demanding quality control">Fabrication suisse, contrôle qualité exigeant</li>
+                        <li data-fr="Design intemporel, reconnaissable globalement" data-en="Timeless design, globally recognizable">Design intemporel, reconnaissable globalement</li>
+                        <li data-fr="Valeur conservée long terme" data-en="Long-term value retention">Valeur conservée long terme</li>
+                    </ul>
+                </div>
+
+                <img src="assets/images/lifestyle/boutique-consultation-space.jpg" alt="Boutique" class="module-image" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\'image-placeholder\'>✨ Retail</div>')">
+                <p class="image-caption" data-fr="Environnement de consultation — sophistication et prestige" data-en="Consultation environment — sophistication and prestige">Environnement de consultation — sophistication et prestige</p>
+
+                
+                <!-- QUIZ INTERACTIF MODULE 2 -->
+<div class="quiz-container">
+    <div class="quiz-header">
+        <div class="quiz-title" data-fr="🎓 Scénario Client : Quiz Interactif">🎓 Scénario Client : Quiz Interactif</div>
+        <div class="quiz-timer" data-fr="⏱️ Testez votre réponse">⏱️ Testez votre réponse</div>
+    </div>
+    <div class="question">
+        <div class="question-text" data-fr="Question Client : « Pourquoi devrais-je choisir une Tudor plutôt qu'une Rolex ? »">Question Client : « Pourquoi devrais-je choisir une Tudor plutôt qu'une Rolex ? »</div>
+        
+        <!-- BOUTON : appelle showAnswer avec l'ID 'answer-mod2' -->
+        <button class="quiz-btn" onclick="showAnswer('answer-mod2')">Afficher la réponse modèle</button>
+        
+        <!-- RÉPONSE : DOIT AVOIR l'ID 'answer-mod2' -->
+       <div class="quiz-answer" id="answer-mod2">
+        <p style="font-weight: 700; color: var(--tudor-burgundy); margin-bottom: 12px;" 
+       data-fr="⚡ Conseil clé :" 
+       data-en="⚡ Key Tip:">
+       ⚡ Conseil clé :
+    </p>
+    
+    <p style="margin-bottom: 15px; padding: 12px; background: linear-gradient(135deg, #fffef9 0%, #fefdfb 100%); border-left: 4px solid var(--tudor-gold); border-radius: 4px;"
+       data-fr="Ne jamais opposer Tudor et Rolex de manière négative. Les deux marques coexistent harmonieusement. Tudor attire une clientèle moderne, informée, qui valorise l'authenticité et le rapport qualité-prix exceptionnel." 
+       data-en="Never oppose Tudor and Rolex negatively. Both brands coexist harmoniously. Tudor attracts a modern, informed clientele that values authenticity and exceptional value for money.">
+       Ne jamais opposer Tudor et Rolex de manière négative. Les deux marques coexistent harmonieusement. Tudor attire une clientèle moderne, informée, qui valorise l'authenticité et le rapport qualité-prix exceptionnel.
+    </p>
+    
+    <!-- SÉPARATEUR (HR) -->
+    <hr style="border: none; border-top: 1px solid rgba(139, 21, 56, 0.2); margin: 15px 0;">
+    
+    <!-- RÉPONSE EXPERT -->
+    <p style="font-weight: 700; color: var(--tudor-burgundy); margin-bottom: 12px;" 
+       data-fr="Réponse du consultant expert :" 
+       data-en="Expert Consultant Answer:">
+       Réponse du consultant expert :
+    </p>
+    
+    <p data-fr="« Excellente question. Tudor et Rolex partagent le même héritage Wilsdorf et la même rigueur suisse. Mais Tudor vous offre l'excellence technique identique avec une accessibilité stratégique. Vous achetez une montre certifiée COSC, fabriquée en Suisse, avec 50+ années de recherche — mais sans la prime de rareté Rolex. Et franchement, le design Tudor Black Bay captive aujourd'hui les connaisseurs autant que les références classiques. C'est l'achat intelligent du passionné. »" 
+       data-en="« Excellent question. Tudor and Rolex share the same Wilsdorf heritage and Swiss rigor. But Tudor offers you identical technical excellence with strategic accessibility. You buy a COSC-certified watch, Swiss-made, with 50+ years of research — but without Rolex's rarity premium. And frankly, Tudor's Black Bay design captivates connoisseurs today as much as classic references. It's the smart purchase of the enthusiast. »">
+       « Excellente question. Tudor et Rolex partagent le même héritage Wilsdorf et la même rigueur suisse. Mais Tudor vous offre l'excellence technique identique avec une accessibilité stratégique. Vous achetez une montre certifiée COSC, fabriquée en Suisse, avec 50+ années de recherche — mais sans la prime de rareté Rolex. Et franchement, le design Tudor Black Bay captive aujourd'hui les connaisseurs autant que les références classiques. C'est l'achat intelligent du passionné. »
+    </p>
+    <!-- MESSAGE SUCCÈS MODULE 2 -->
+<p style="margin-top: 15px; padding: 12px; background: #fffef9; border-left: 4px solid var(--tudor-gold); color: var(--tudor-burgundy); font-weight: 600; border-radius: 4px;" 
+   data-fr="✓ Excellent ! Vous maîtrisez le positionnement Tudor vs Rolex. Vous êtes prêt à passer à la validation finale." 
+   data-en="✓ Excellent! You master the Tudor vs Rolex positioning. Ready for final validation.">
+   ✓ Excellent ! Vous maîtrisez le positionnement Tudor vs Rolex. Vous êtes prêt à passer à la validation finale.
+</p>
+
+</div>
+
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="switchModule(0)" data-fr="← Retour" data-en="← Back">← Retour</button>
+                    <button class="btn btn-primary" onclick="switchModule(2)" data-fr="Suivant →" data-en="Next →">Suivant →</button>
+                </div>
+            </section>
+
+            <!-- MODULE 3: AUTHENTICITÉ -->
+            <section class="module-content" id="module-2">
+                <div class="module-header">
+                    <h1 data-fr="Authenticité & Contrôle Qualité" data-en="Authenticity & Quality Control">Authenticité & Contrôle Qualité</h1>
+                    <div class="module-subtitle" data-fr="Protection du Savoir-faire Tudor" data-en="Protection of Tudor Know-How">Protection du Savoir-faire Tudor</div>
+                </div>
+
+                <div class="card">
+                    <h2 data-fr="🔍 Critères d'Authenticité" data-en="🔍 Authentication Criteria">🔍 Critères d'Authenticité</h2>
+                    <p data-fr="En tant que consultant Tudor, vous devez pouvoir <strong>identifier instantanément une montre authentique</strong> :" data-en="As a Tudor consultant, you must be able to <strong>instantly identify an authentic watch</strong>:">En tant que consultant Tudor, vous devez pouvoir <strong>identifier instantanément une montre authentique</strong> :</p>
+                    <ul>
+                        <li data-fr="<strong>Logo & Gravures :</strong> L'écusson Tudor net, sans bavures. Gravures profondes et régulières." data-en="<strong>Logo & Engravings:</strong> Clean Tudor emblem, no smudges. Deep and regular engravings."><strong>Logo & Gravures :</strong> L'écusson Tudor net, sans bavures. Gravures profondes et régulières.</li>
+                        <li data-fr="<strong>Cadran & Marqueurs :</strong> Couleurs exactes (Bourgogne, Bleu), marqueurs luminescents uniformes" data-en="<strong>Dial & Markers:</strong> Exact colors (Burgundy, Blue), uniform luminescent markers"><strong>Cadran & Marqueurs :</strong> Couleurs exactes (Bourgogne, Bleu), marqueurs luminescents uniformes</li>
+                        <li data-fr="<strong>Bezel :</strong> Rotation lisse et précise, graduations alignées, pas de jeu latéral" data-en="<strong>Bezel:</strong> Smooth and precise rotation, aligned graduations, no side play"><strong>Bezel :</strong> Rotation lisse et précise, graduations alignées, pas de jeu latéral</li>
+                        <li data-fr="<strong>Mouvement :</strong> Chronométrage COSC certifié (± 6 secondes/jour). Cas de test disponible en boutique." data-en="<strong>Movement:</strong> COSC-certified timing (± 6 seconds/day). Test case available in store."><strong>Mouvement :</strong> Chronométrage COSC certifié (± 6 secondes/jour). Cas de test disponible en boutique.</li>
+                    </ul>
+                </div>
+
+                <img src="assets/images/technical/dial-markers-detail.jpg" alt="Cadran" class="module-image" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\'image-placeholder\'>🔍 Détail</div>')">
+                <p class="image-caption" data-fr="Marqueurs nets et alignés — critère d'authenticité clé" data-en="Clean and aligned markers — key authenticity criterion">Marqueurs nets et alignés — critère d'authenticité clé</p>
+
+                <img src="assets/images/technical/crown-bezel-detail.jpg" alt="Couronne" class="module-image" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\'image-placeholder\'>✓ Détail</div>')">
+                <p class="image-caption" data-fr="Couronne et bezel — détails de vérification qualité" data-en="Crown and bezel — quality verification details">Couronne et bezel — détails de vérification qualité</p>
+
+                <div class="card">
+                    <h2 data-fr="✅ Engagement Garantie" data-en="✅ Warranty Commitment">✅ Engagement Garantie</h2>
+                    <p data-fr="Chaque montre Tudor vendue en boutique agrée offre :" data-en="Each Tudor watch sold in an authorized store offers:">Chaque montre Tudor vendue en boutique agrée offre :</p>
+                    <ul>
+                        <li data-fr="<strong>Garantie 2 ans</strong> de fabrication suisse" data-en="<strong>2-year warranty</strong> for Swiss manufacturing"><strong>Garantie 2 ans</strong> de fabrication suisse</li>
+                        <li data-fr="<strong>Service après-vente 5 ans</strong> (révision, réparation)" data-en="<strong>5-year after-sales service</strong> (servicing, repair)"><strong>Service après-vente 5 ans</strong> (révision, réparation)</li>
+                        <li data-fr="<strong>Certificat d'authenticité</strong> documenté (carte garantie + certificat COSC)" data-en="<strong>Authenticated certificate</strong> documented (warranty card + COSC certificate)"><strong>Certificat d'authenticité</strong> documenté (carte garantie + certificat COSC)</li>
+                        <li data-fr="<strong>Pérennité</strong> — Valeur Tudor conservée, revente facilitée" data-en="<strong>Longevity</strong> — Tudor value retained, resale facilitated"><strong>Pérennité</strong> — Valeur Tudor conservée, revente facilitée</li>
+                    </ul>
+                </div>
+
+                <div class="card" style="background: linear-gradient(135deg, rgba(128, 0, 32, 0.05), rgba(0, 51, 102, 0.05)); border-left-color: var(--tudor-gold);">
+                    <h2 data-fr="🏅 Votre Rôle Fondamental" data-en="🏅 Your Fundamental Role">🏅 Votre Rôle Fondamental</h2>
+                    <p style="font-style: italic; color: var(--tudor-burgundy); font-weight: 600;" data-fr="« Vous n'êtes pas un commercial. Vous êtes un gardien du savoir-faire Tudor. »" data-en=" «You are not a salesman. You are a guardian of Tudor know-how. »"">« Vous n'êtes pas un commercial. Vous êtes un gardien du savoir-faire Tudor. »</p>
+                    <p style="margin-top: 15px;" data-fr="En tant que consultant, votre mission dépasse la vente. Vous :" data-en="As a consultant, your mission goes beyond sales. You:">En tant que consultant, votre mission dépasse la vente. Vous :</p>
+                    <ul>
+                        <li data-fr="<strong>Éduquez</strong> le client sur l'essence d'une montre de luxe suisse" data-en="<strong>Educate</strong> the client on the essence of a Swiss luxury watch"><strong>Éduquez</strong> le client sur l'essence d'une montre de luxe suisse</li>
+                        <li data-fr="<strong>Protégez</strong> la marque Tudor contre les contrefaçons et imitations" data-en="<strong>Protect</strong> the Tudor brand against counterfeits and imitations"><strong>Protégez</strong> la marque Tudor contre les contrefaçons et imitations</li>
+                        <li data-fr="<strong>Fidélisez</strong> le client en bâtissant confiance et expertise" data-en="<strong>Retain</strong> the client by building trust and expertise"><strong>Fidélisez</strong> le client en bâtissant confiance et expertise</li>
+                        <li data-fr="<strong>Inspirez</strong> par votre connaissance du produit et des valeurs Tudor" data-en="<strong>Inspire</strong> through your knowledge of the product and Tudor values"><strong>Inspirez</strong> par votre connaissance du produit et des valeurs Tudor</li>
+                    </ul>
+                </div>
+                <div class="quiz-container">
+    <div class="quiz-header">
+        <div class="quiz-title" data-fr="✓ Quiz Final : Validation des Compétences" data-en="✓ Final Quiz: Skills Validation">✓ Quiz Final : Validation des Compétences</div>
+    </div>
+    <div class="question">
+        <div class="question-text" data-fr="Question : Un client vous demande : « Comment puis-je être sûr que cette Tudor est authentique ? »" data-en="Question: A client asks you: « How can I be sure this Tudor is authentic? »"">Question : Un client vous demande : « Comment puis-je être sûr que cette Tudor est authentique ? »</div>
+        
+        <button class="quiz-btn" onclick="showAnswer('answer-final')" data-fr="Afficher la réponse modèle" data-en="Show Model Answer">Afficher la réponse modèle</button>
+        
+        <div class="quiz-answer" id="answer-final">
+            <p style="font-weight: 700; color: var(--tudor-burgundy); margin-bottom: 12px;" data-fr="Réponse du consultant expert :" data-en="Expert Consultant Answer:">Réponse du consultant expert :</p>
+            
+            <p data-fr="« Excellente question qui démontre votre vigilance ! Laissez-moi vous montrer les signes distinctifs d'une Tudor authentique : »" data-en="« Excellent question that shows your vigilance! Let me show you the distinctive signs of an authentic Tudor »"">« Excellente question qui démontre votre vigilance ! Laissez-moi vous montrer les signes distinctifs d'une Tudor authentique : »</p>
+            
+            <p style="margin-top: 12px;"><strong data-fr="Premièrement, observez le cadran" data-en="First, look at the dial">Premièrement, observez le cadran</strong> <span data-fr="— la finition est absolument impeccable, avec des index appliqués et non imprimés. Voyez comment l'aiguille 'snowflake' des heures est parfaitement proportionnée ? C'est une signature Tudor depuis 1969." data-en="— the finishing is absolutely impeccable, with applied, not printed indexes. See how the 'snowflake' hour hand is perfectly proportioned? This has been a Tudor signature since 1969.">— la finition est absolument impeccable, avec des index appliqués et non imprimés. Voyez comment l'aiguille 'snowflake' des heures est parfaitement proportionnée ? C'est une signature Tudor depuis 1969.</span></p>
+            
+            <p style="margin-top: 12px;"><strong data-fr="Deuxièmement, le mouvement" data-en="Second, the movement">Deuxièmement, le mouvement</strong> <span data-fr=": cette montre intègre un calibre manufacture MT5602 certifié COSC. Regardez au dos — le numéro de série est gravé avec une précision laser, impossible à reproduire pour une contrefaçon." data-en=": this watch integrates an MT5602 manufacture caliber certified COSC. Look at the back — the serial number is laser-engraved with precision, impossible to reproduce for a counterfeit.">: cette montre intègre un calibre manufacture MT5602 certifié COSC. Regardez au dos — le numéro de série est gravé avec une précision laser, impossible à reproduire pour une contrefaçon.</span></p>
+            
+            <p style="margin-top: 12px;"><strong data-fr="Enfin, vous recevez un certificat d'authenticité" data-en="Finally, you receive an authenticity certificate">Enfin, vous recevez un certificat d'authenticité</strong> <span data-fr="et de garantie internationale de 5 ans, enregistré dans notre système mondial. Vous pouvez à tout moment faire authentifier votre montre dans n'importe quel centre de service agréé Tudor." data-en="and international 5-year warranty, registered in our global system. You can have your watch authenticated at any time at any authorized Tudor service center.">et de garantie internationale de 5 ans, enregistré dans notre système mondial. Vous pouvez à tout moment faire authentifier votre montre dans n'importe quel centre de service agréé Tudor.</span></p>
+            
+            <p style="margin-top: 12px;" data-fr="Chez nous, chaque Tudor vendue est garantie 100% authentique, et nous assumons pleinement cette responsabilité en tant que détaillant agréé." data-en="With us, every Tudor sold is guaranteed 100% authentic, and we fully assume this responsibility as an authorized retailer.">Chez nous, chaque Tudor vendue est garantie 100% authentique, et nous assumons pleinement cette responsabilité en tant que détaillant agréé.</p>
+            
+            <p style="margin-top: 15px; padding: 12px; background: #f0faf0; border-left: 4px solid #2e8b57; color: #1b5e20; font-weight: 600; border-radius: 4px;" data-fr="✓ Parfait ! Vous avez démontré expertise, pédagogie et réassurance client. Vous êtes prêt à représenter Tudor !" data-en="✓ Perfect! You demonstrated expertise, pedagogy and customer reassurance. You are ready to represent Tudor!">✓ Parfait ! Vous avez démontré expertise, pédagogie et réassurance client. Vous êtes prêt à représenter Tudor !</p>
+        </div>
+    </div>
+</div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="switchModule(1)" data-fr="← Retour" data-en="← Back">← Retour</button>
+                    <button class="btn btn-primary" onclick="completeModule()" data-fr="✓ Compléter la Formation" data-en="✓ Complete Training">✓ Compléter la Formation</button>
+                </div>
+            </section>
+
+        </main>
+
+    </div>
+
+    <script>
+        let currentModule = 0;
+        let currentLanguage = 'fr';
+        const totalModules = 3;
+
+// ============ FONCTION COVER SCREEN ============
+function startCourse() {
+    const coverScreen = document.getElementById('cover-screen');
+    coverScreen.classList.add('hidden');
+}
+
+        function showAnswer(answerId) {
+    const element = document.getElementById(answerId);
+    if (element) {
+        element.classList.add('show');
+    }
+}
+
+function hideAnswers() {
+    document.querySelectorAll('.quiz-answer').forEach(el => {
+        el.classList.remove('show');
+    });
+}
+
+
+      function switchModule(moduleIndex) {
+    document.querySelectorAll('.module-content').forEach(el => {
+        el.classList.remove('active');
+    });
+    document.querySelectorAll('.module-item').forEach(el => {
+        el.classList.remove('active');
+    });
+    document.getElementById(`module-${moduleIndex}`).classList.add('active');
+    document.querySelectorAll('.module-item')[moduleIndex].classList.add('active');
+    currentModule = moduleIndex;
+    updateProgress();
+    hideAnswers();  // ← AJOUTEZ CETTE LIGNE
+    document.querySelector('main').scrollTop = 0;
+}
+
+
+        function updateProgress() {
+            const progressPercent = Math.round(((currentModule + 1) / totalModules) * 100);
+            document.getElementById('progressFill').style.width = progressPercent + '%';
+            document.getElementById('progressPercent').textContent = progressPercent + '%';
+        }
+
+        function toggleLanguage() {
+            currentLanguage = currentLanguage === 'fr' ? 'en' : 'fr';
+            updateLanguage();
+        }
+
+        function updateLanguage() {
+            const langBtn = document.getElementById('langBtn');
+            langBtn.textContent = currentLanguage === 'fr' ? 'EN' : 'FR';
+
+            document.querySelectorAll('[data-fr][data-en]').forEach(el => {
+                if (el.tagName === 'IMG' || el.tagName === 'INPUT') return;
+                
+                const text = currentLanguage === 'fr' ? el.getAttribute('data-fr') : el.getAttribute('data-en');
+                if (text && !text.includes('<')) {
+                    el.textContent = text;
+                } else if (text && text.includes('<')) {
+                    el.innerHTML = text;
+                }
+            });
+        }
+
+        function completeModule() {
+            const msg = currentLanguage === 'fr' 
+                ? '🎓 Bravo ! Vous avez complété la formation Tudor.\n\n✓ Certificat de participation généré\n✓ Connaissances validées\n\nVous êtes maintenant consultant Tudor certifié !'
+                : '🎓 Congratulations! You have completed Tudor training.\n\n✓ Participation certificate generated\n✓ Knowledge validated\n\nYou are now a certified Tudor consultant!';
+            alert(msg);
+            document.getElementById('progressFill').style.width = '100%';
+            document.getElementById('progressPercent').textContent = '100%';
+        }
+
+        updateProgress();
+    </script>
+
+</body>
+</html>
