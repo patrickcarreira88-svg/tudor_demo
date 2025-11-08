@@ -5,6 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TUDOR Formation - Excellence & Savoir-faire</title>
     <style>
+    /* ========== RESPONSIVE DESIGN ========== */
+
+/* MOBILE : 480px et moins */
+@media (max-width: 480px) {
+    /* Cover */
+    #cover-screen {
+        gap: 15px;
+        padding: 20px;
+    }
+    .cover-content h1 {
+        font-size: 28px;
+        margin-bottom: 10px;
+    }
+    .cover-content p {
+        font-size: 16px;
+    }
+    .cover-btn {
+        padding: 12px 32px;
+        font-size: 14px;
+    }
+    
+    /* Header */
+    header {
+        padding: 12px 15px;
+    }
+    header h1 {
+        font-size: 18px;
+    }
+    
+    /* Main */
+    main {
+        padding: 20px 15px;
+    }
+    
+    /* Cards & Quiz */
+    .card, .quiz-container {
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+    
+    /* Typographie */
+    h2 { font-size: 20px; }
+    p { font-size: 14px; }
+    
+    /* Buttons */
+    button {
+        width: 100%;
+        padding: 10px 16px;
+        font-size: 14px;
+    }
+    .button-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+/* TABLETTE : 768px et moins */
+@media (max-width: 768px) {
+    main {
+        padding: 30px 20px;
+    }
+    header {
+        padding: 15px 20px;
+    }
+    .card, .quiz-container {
+        padding: 20px;
+    }
+    h1 { font-size: 28px; }
+    h2 { font-size: 22px; }
+    p { font-size: 15px; }
+}
+
         :root {
             --tudor-black: #000000;
             --tudor-red: #FF0000;
@@ -838,9 +910,6 @@
                 <img src="assets/images/technical/dial-markers-detail.jpg" alt="Cadran" class="module-image" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\'image-placeholder\'>🔍 Détail</div>')">
                 <p class="image-caption" data-fr="Marqueurs nets et alignés — critère d'authenticité clé" data-en="Clean and aligned markers — key authenticity criterion">Marqueurs nets et alignés — critère d'authenticité clé</p>
 
-                <img src="assets/images/technical/crown-bezel-detail.jpg" alt="Couronne" class="module-image" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\'image-placeholder\'>✓ Détail</div>')">
-                <p class="image-caption" data-fr="Couronne et bezel — détails de vérification qualité" data-en="Crown and bezel — quality verification details">Couronne et bezel — détails de vérification qualité</p>
-
                 <div class="card">
                     <h2 data-fr="✅ Engagement Garantie" data-en="✅ Warranty Commitment">✅ Engagement Garantie</h2>
                     <p data-fr="Chaque montre Tudor vendue en boutique agrée offre :" data-en="Each Tudor watch sold in an authorized store offers:">Chaque montre Tudor vendue en boutique agrée offre :</p>
@@ -851,6 +920,9 @@
                         <li data-fr="<strong>Pérennité</strong> — Valeur Tudor conservée, revente facilitée" data-en="<strong>Longevity</strong> — Tudor value retained, resale facilitated"><strong>Pérennité</strong> — Valeur Tudor conservée, revente facilitée</li>
                     </ul>
                 </div>
+
+                <img src="assets/images/technical/crown-bezel-detail.jpg" alt="Couronne" class="module-image" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\'image-placeholder\'>✓ Détail</div>')">
+                <p class="image-caption" data-fr="Couronne et bezel — détails de vérification qualité" data-en="Crown and bezel — quality verification details">Couronne et bezel — détails de vérification qualité</p>
 
                 <div class="card" style="background: linear-gradient(135deg, rgba(128, 0, 32, 0.05), rgba(0, 51, 102, 0.05)); border-left-color: var(--tudor-gold);">
                     <h2 data-fr="🏅 Votre Rôle Fondamental" data-en="🏅 Your Fundamental Role">🏅 Votre Rôle Fondamental</h2>
@@ -937,7 +1009,7 @@ function hideAnswers() {
     currentModule = moduleIndex;
     updateProgress();
     hideAnswers();  // ← AJOUTEZ CETTE LIGNE
-    document.querySelector('main').scrollTop = 0;
+    window.scrollTo(0, 0);  // Plus robuste
 }
 
 
